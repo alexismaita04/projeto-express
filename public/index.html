@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerenciar Pessoas</title>
+  <link rel="stylesheet" href="/css/estilo.css" />
+</head>
+<body>
+  <h1>Pessoas</h1>
+
+  <h2>Adicionar</h2>
+  <form id="formAdd">
+    <input type="text" id="nome" placeholder="Nome" required />
+    <input type="number" id="idade" placeholder="Idade" required />
+    <input type="text" id="cidade" placeholder="Cidade" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h2>Consultar</h2>
+  <button type="button" onclick="listarPessoas()">Atualizar lista</button>
+  <ul id="lista"></ul>
+
+  <script>
+    const apiUrl = '/pessoas';
+
+    async function listarPessoas() {
+      const resp = await fetch(apiUrl);
+      const dados = await resp.json();
+      const ul = document.getElementById('lista');
+      ul.innerHTML = '';
+
+      dados.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = `#${p.id} - ${p.nome} (${p.idade} anos, ${p.cidade}) `;
+
+        const btnDel = document.createElement('button');
+        btnDel.textContent = 'Deletar';
+        btnDel.onclick = () => deletarPessoa(p.id);
+
+        li.appendChild(btnDel);
+        ul.appendChild(li);
+      });
+    }
+
+    document.getElementById('formAdd').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const novaPessoa = {
+        nome: document.getElementById('nome').value,
+        idade: Number(document.getElementById('idade').value),
+        cidade: document.getElementById('cidade').value
+      };
+
+      await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novaPessoa)
+      });
+
+      e.target.reset();
+      listarPessoas();
+    });
+
+    async function deletarPessoa(id) {
+      await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+      listarPessoas();
+    }
+
+    listarPessoas();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "projeto-express",
+  "version": "1.0.0",
+  "description": "API de pessoas com Express.js e PostgreSQL (Twelve-Factor App)",
+  "main": "server.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^5.3.0",
+    "pg": "^8.11.5"
+  }
+}
