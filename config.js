@@ -10,6 +10,8 @@ const config = {
   ambiente: process.env.NODE_ENV || 'development', // development | staging | production
   porta: Number(process.env.PORT) || 3000,         // variáveis de ambiente são sempre texto
 
+  viacepUrl: process.env.VIACEP_URL || 'https://viacep.com.br/ws',
+  
   // Dados de conexão do PostgreSQL (FATOR 4: o banco é um serviço de apoio).
   // Os nomes das chaves (host, port, user, password, database) são os que a biblioteca "pg" espera.
   // Usuário, senha e banco NÃO têm valor padrão de propósito: são segredos/dados de cada ambiente.
