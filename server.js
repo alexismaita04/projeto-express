@@ -2,6 +2,7 @@ import express from 'express';
 import config from './config.js';
 import pool, { iniciarBanco } from './db.js';
 import pessoasRouter from './router/pessoas.js';
+import cepRouter from './router/cep.js';
 
 const app = express();
 
@@ -25,8 +26,9 @@ app.get('/saude', async (req, res) => {
   });
 });
 
-// Todas as rotas que começam com /pessoas são tratadas pelo router.
+// Todas as rotas que começam com /pessoas e /cep são tratadas pelo router.
 app.use('/pessoas', pessoasRouter);
+app.use('/cep', cepRouter);
 
 // Tratador de erros (tem 4 parâmetros: é assim que o Express o reconhece).
 // Qualquer erro não tratado nas rotas (ex.: banco fora do ar) cai aqui.
