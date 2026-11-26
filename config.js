@@ -10,6 +10,10 @@ const config = {
   ambiente: process.env.NODE_ENV || 'development', // development | staging | production
   porta: Number(process.env.PORT) || 3000,         // variáveis de ambiente são sempre texto
 
+  // FATOR 4: endereço da API externa de CEP (ViaCEP).
+  // O endereço fica na configuração, não no código: se o serviço mudar de
+  // endereço (ou for trocado por outro), basta alterar VIACEP_URL no .env.
+  // O texto depois do || é o valor padrão, usado se a variável não existir.
   viacepUrl: process.env.VIACEP_URL || 'https://viacep.com.br/ws',
   
   // Dados de conexão do PostgreSQL (FATOR 4: o banco é um serviço de apoio).

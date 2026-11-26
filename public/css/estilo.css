@@ -90,3 +90,8 @@ button:hover {
 #lista li button:hover {
   background-color: #b91c1c;
 }
+
+#resultadoCep {
+  margin-top: 10px;
+  color: #374151;
+}
