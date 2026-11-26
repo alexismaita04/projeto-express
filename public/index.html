@@ -20,6 +20,13 @@
   <button type="button" onclick="listarPessoas()">Atualizar lista</button>
   <ul id="lista"></ul>
 
+  <h2>Consultar CEP (serviço externo)</h2>
+  <form id="formCep">
+    <input type="text" id="cep" placeholder="CEP (ex.: 85801000)" required />
+    <button type="submit">Buscar</button>
+  </form>
+  <p id="resultadoCep"></p>
+
   <script>
     const apiUrl = '/pessoas';
 
@@ -65,6 +72,23 @@
       await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
       listarPessoas();
     }
+
+    // Quando o formulário de CEP for enviado, consulta a nossa API (rota /cep).
+    document.getElementById('formCep').addEventListener('submit', async (e) => {
+      e.preventDefault(); // impede o navegador de recarregar a página
+
+      const cep = document.getElementById('cep').value;
+
+      // encodeURIComponent deixa o texto seguro para ir dentro de uma URL
+      const resp = await fetch(`/cep/${encodeURIComponent(cep)}`);
+      const dados = await resp.json();
+
+      // Se deu certo (resp.ok), mostra o endereço; senão, mostra a mensagem de erro.
+      // textContent insere texto puro, o que é seguro contra injeção de HTML.
+      document.getElementById('resultadoCep').textContent = resp.ok
+        ? `${dados.logradouro}, ${dados.bairro} - ${dados.localidade}/${dados.uf}`
+        : dados.erro;
+    });
 
     listarPessoas();
   </script>
